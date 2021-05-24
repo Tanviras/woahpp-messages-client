@@ -1,0 +1,11 @@
+in index.css
+
+*{
+  margin:0;
+}
+
+all the css in all places
+
+clickable icon by <IconButton>
+
+<Avatar src=""/>
