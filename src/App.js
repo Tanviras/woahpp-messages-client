@@ -1,15 +1,78 @@
 import './App.css';
 import Sidebar from './Components/Sidebar/Sidebar';
 import Chat from './Components/Chat/Chat';
+import { createContext, useEffect, useState } from 'react';
+import Pusher from 'pusher-js';
+import axios from '../src/Components/axios';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Login from "../src/Components/Login/Login";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
+
+export const UserContext = createContext();
 
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState({});
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    axios.get('/messages/sync')
+      .then(response => {
+        setMessages(response.data);
+      })
+  }, [])
+
+  useEffect(() => {
+    //from 'app'(whatsapp)>'getting started'
+    const pusher = new Pusher('a02fd6eacca6ba6bde5a', {
+      cluster: 'eu'
+    });
+
+    const channel = pusher.subscribe('messages');
+    channel.bind('inserted', (newMessage) => {
+      // alert(JSON.stringify(newMessage));
+      setMessages([...messages, newMessage])
+    });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+
+  }, [messages])
+
+
+  console.log(messages);
+
   return (
-    <div className="app">
-      <div className="app__body">
-        <Sidebar></Sidebar>
-        <Chat></Chat>
-      </div>
-    </div>
+    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+      <Router>
+        <Switch>
+
+          <div className="app">
+
+            <Route path="/login">
+              <Login></Login>
+            </Route>
+
+            <PrivateRoute exact path="/">
+              <div className="app__body">
+                <Sidebar></Sidebar>
+                <Chat messages={messages}></Chat>
+              </div>
+            </PrivateRoute>
+
+            <PrivateRoute path="/home">
+              <div className="app__body">
+                <Sidebar></Sidebar>
+                <Chat messages={messages}></Chat>
+              </div>
+            </PrivateRoute>
+
+          </div>
+
+        </Switch>
+      </Router>
+    </UserContext.Provider>
   );
 }
 
