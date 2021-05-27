@@ -1,5 +1,6 @@
 import { Avatar, IconButton } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useState, useContext  } from 'react';
+import { UserContext } from '../../App';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
@@ -8,9 +9,27 @@ import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MicIcon from '@material-ui/icons/Mic';
 import axios from '../axios';
 
+
 const Chat = ({ messages }) => {
+const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+console.log(loggedInUser.name);
 
 const [input,setInput]=useState("");
+
+const today = new Date();
+
+function formatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+
+
 
 
     const sendMessage = async (e) => {
@@ -18,13 +37,18 @@ const [input,setInput]=useState("");
 
         await axios.post('/messages/new',{
             message:input,
-            name:"Hitler",
-            timestamp:"Just now",
-            recieved:false,
+            name:loggedInUser.name,
+            timestamp: formatAMPM(today),
+            // recieved:true,
+            email: loggedInUser.email,
         })
 
         setInput("");
     }
+
+
+  
+
 
     return (
         <div className="chat">
@@ -58,7 +82,7 @@ const [input,setInput]=useState("");
 
                 {
                     messages.map((message) => (
-                        <p className={`chat__message ${message.recieved && "chat__reciever"}`}>
+                        <p className={`chat__message ${(message.email===loggedInUser.email) && "chat__reciever"}`}>
                             <span className='chat__name'>
                                <b>{message.name}</b> 
                             </span>

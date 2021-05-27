@@ -1,12 +1,13 @@
 import './App.css';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { createContext, useEffect, useState } from 'react';
 import Sidebar from './Components/Sidebar/Sidebar';
 import Chat from './Components/Chat/Chat';
-import { createContext, useEffect, useState } from 'react';
-import Pusher from 'pusher-js';
-import axios from '../src/Components/axios';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "../src/Components/Login/Login";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
+import Pusher from 'pusher-js';
+import axios from '../src/Components/axios';
+
 
 export const UserContext = createContext();
 
@@ -21,8 +22,9 @@ function App() {
       })
   }, [])
 
+
   useEffect(() => {
-    //from 'app'(whatsapp)>'getting started'
+    //pusher>'app'(whatsapp)>'getting started'
     const pusher = new Pusher('a02fd6eacca6ba6bde5a', {
       cluster: 'eu'
     });
@@ -41,10 +43,9 @@ function App() {
   }, [messages])
 
 
-  console.log(messages);
-
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+      <h3>{loggedInUser.name}</h3>
       <Router>
         <Switch>
 
