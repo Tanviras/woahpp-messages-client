@@ -27,10 +27,10 @@ const Login = () => {
       .auth()
       .signInWithPopup(provider)
       .then(function (result) {
-        const { displayName, email } = result.user;
+        const { displayName, email} = result.user;
         const signedInUser = {
           name: displayName,
-          email: email,
+          email: email
         };
 
         setLoggedInUser(signedInUser);

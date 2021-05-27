@@ -8,11 +8,11 @@ import './Chat.css';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import MicIcon from '@material-ui/icons/Mic';
 import axios from '../axios';
+import coolBoys from "../Images/coolBoys.jpg";
 
 
 const Chat = ({ messages }) => {
 const [loggedInUser, setLoggedInUser] = useContext(UserContext);
-console.log(loggedInUser.name);
 
 const [input,setInput]=useState("");
 
@@ -48,17 +48,17 @@ function formatAMPM(date) {
 
 
   
-
+console.log(loggedInUser);
 
     return (
         <div className="chat">
 
             <div className="chat__header">
-                <Avatar />
+                <Avatar src={coolBoys}/>
 
                 <div className="chat__headerInfo">
-                    <h3>Room Name</h3>
-                    <p>Last seen at...</p>
+                    <h3>Cool Boys!</h3>
+                    <p>Last seen at {formatAMPM(today)} </p>
                 </div>
 
                 <div className="chat__headerRight">
