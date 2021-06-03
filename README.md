@@ -5,7 +5,7 @@ Whatsapp-messages is a full-stack site which can be used for messaging via diffe
 </p>
 
 <h2>The source code is uploaded at two parts in two repositories.</h2>
-<b>Live Link:</b> https://whatsapp-e85d5.web.app/ <br><br>
+<b>Live Link:</b> https://whatsapp-e85d5.firebaseapp.com/ <br><br>
 <b>Client:</b> https://github.com/Tanviras/whatsapp-messages-client  <br><br>
 <b>Server:</b> https://github.com/Tanviras/whatsapp-messages-server
 
