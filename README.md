@@ -1,4 +1,4 @@
-<h1>Whatsapp Messages</h1>
+<h1>Woahapp Messages</h1>
 
 <p>
 Woahapp-messages is a full-stack site which can be used for messaging via different gmail
