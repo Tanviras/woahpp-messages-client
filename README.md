@@ -1,7 +1,7 @@
 <h1>Whatsapp Messages</h1>
 
 <p>
-Whatsapp-messages is a full-stack site which can be used for messaging via different gmail
+Woahapp-messages is a full-stack site which can be used for messaging via different gmail
 </p>
 
 <h2>The source code is uploaded at two parts in two repositories.</h2>
